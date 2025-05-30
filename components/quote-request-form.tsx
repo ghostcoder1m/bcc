@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { CalendarIcon, CheckCircle, Loader2 } from "lucide-react"
 import { format } from "date-fns"
+import emailjs from 'emailjs-com'
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -57,16 +58,22 @@ export function QuoteRequestForm({ city }: { city?: string | null }) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true)
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-
-    console.log(values)
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-
-    // Optionally redirect after a delay
-    // setTimeout(() => router.push('/thank-you'), 2000)
+    try {
+      await emailjs.send(
+        'service_4gsfp8h', // Service ID
+        'template_59g1lnw', // Template ID
+        {
+          ...values,
+          preferredDate: values.preferredDate ? values.preferredDate.toLocaleDateString() : '',
+        },
+        'hUe39yuEvJI32drrH' // Public Key
+      )
+      setIsSubmitted(true)
+    } catch (error) {
+      alert('There was an error sending your request. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isSubmitted) {

@@ -1,15 +1,17 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { type ButtonHTMLAttributes, forwardRef } from "react"
+import { type ButtonHTMLAttributes, forwardRef, cloneElement, isValidElement } from "react"
+import { Slot } from "@radix-ui/react-slot"
 
 interface BubblyButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline"
   size?: "sm" | "md" | "lg" | "xl"
+  asChild?: boolean
 }
 
 export const BubblyButton = forwardRef<HTMLButtonElement, BubblyButtonProps>(
-  ({ className, variant = "primary", size = "md", children, ...props }, ref) => {
+  ({ className, variant = "primary", size = "md", asChild = false, children, ...props }, ref) => {
     const baseStyles =
       "relative inline-flex items-center justify-center font-bold transition-all duration-300 transform hover:scale-105 active:scale-95"
 
@@ -26,13 +28,25 @@ export const BubblyButton = forwardRef<HTMLButtonElement, BubblyButtonProps>(
       xl: "px-12 py-6 text-xl rounded-full",
     }
 
+    const allClassNames = cn(baseStyles, variants[variant], sizes[size], className)
+
+    if (asChild && isValidElement(children)) {
+      const childElement = children as React.ReactElement<any>
+      return cloneElement(childElement, {
+        className: cn(childElement.props.className, allClassNames),
+        ...props,
+      })
+    }
+
+    const Comp = asChild ? Slot : "button"
+
     return (
-      <button ref={ref} className={cn(baseStyles, variants[variant], sizes[size], className)} {...props}>
+      <Comp ref={ref} className={allClassNames} {...props}>
         <span className="relative z-10">{children}</span>
         {variant === "primary" && (
           <div className="absolute inset-0 rounded-full bg-white opacity-0 hover:opacity-20 transition-opacity duration-300" />
         )}
-      </button>
+      </Comp>
     )
   },
 )
