@@ -42,9 +42,15 @@ export const BubblyButton = forwardRef<HTMLButtonElement, BubblyButtonProps>(
 
     return (
       <Comp ref={ref} className={allClassNames} {...props}>
-        <span className="relative z-10">{children}</span>
-        {variant === "primary" && (
-          <div className="absolute inset-0 rounded-full bg-white opacity-0 hover:opacity-20 transition-opacity duration-300" />
+        {asChild ? (
+          children
+        ) : (
+          <>
+            <span className="relative z-10">{children}</span>
+            {variant === "primary" && (
+              <div className="absolute inset-0 rounded-full bg-white opacity-0 hover:opacity-20 transition-opacity duration-300" />
+            )}
+          </>
         )}
       </Comp>
     )
