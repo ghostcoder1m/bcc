@@ -2,10 +2,11 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "destination": "https://bluescleaningcrew.com/$1",
       "has": [
-        { "type": "host", "value": "bluescleaningcrew.com" }
+        { "type": "host", "value": "bluescleaningcrew.com" },
+        { "type": "protocol", "value": "http" }
       ],
+      "destination": "https://bluescleaningcrew.com/$1",
       "permanent": true
     }
   ]
