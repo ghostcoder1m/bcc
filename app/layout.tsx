@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '24238468525754846');
         fbq('track', 'PageView');` }} />
-        <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=24238468525754846&ev=PageView&noscript=1" /></noscript>
+        <noscript dangerouslySetInnerHTML={{ __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=24238468525754846&ev=PageView&noscript=1" />` }} />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
