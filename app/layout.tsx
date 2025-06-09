@@ -54,6 +54,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         fbq('init', '24238468525754846');
         fbq('track', 'PageView');` }} />
         <noscript dangerouslySetInnerHTML={{ __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=24238468525754846&ev=PageView&noscript=1" />` }} />
+        {/* Facebook SDK for JavaScript */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '1004021988611223',
+              cookie     : true,
+              xfbml      : true,
+              version    : 'v19.0'
+            });
+            FB.AppEvents.logPageView();   
+          };
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "https://connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+        `}} />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
