@@ -7,14 +7,6 @@
       ],
       "destination": "https://bluescleaningcrew.com/$1",
       "permanent": true
-    },
-    {
-      "source": "/(.*)",
-      "has": [
-        { "type": "host", "value": "bluescleaningcrew.com" }
-      ],
-      "destination": "https://bluescleaningcrew.com/$1",
-      "permanent": true
     }
   ]
 } 
